@@ -1,0 +1,22 @@
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import userRouter from "./routers/userRoute.js";
+import { connecToDb } from "./utils/dbConnecion.js";
+import { closeDbConnection } from "./utils/dbConnecion.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import auth from "./middlewares/authnticate.js";
+import todoRouter from "./routers/todoRoute.js";
+dotenv.config();
+const app = express();
+app.use(express.json());
+app.use(cors());
+app.use("/users", userRouter);
+app.use("/todos",auth ,todoRouter);
+app.use(errorHandler);
+const PORT = process.env.PORT;
+connecToDb();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
