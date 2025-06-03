@@ -38,7 +38,7 @@ const userSchema = new Schema({
     toJSON:{
         transform(doc, ret, options) {
             delete ret.password;
-            delete ret.__v;
+            delete ret.__v;//mongoose adds __v by default for tracking
             return ret;
         }
     }
